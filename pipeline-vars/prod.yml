@@ -1,0 +1,10 @@
+variables:
+  rgServiceConnection: REDACTED
+  kvServiceConnection: REDACTED
+  appName: REDACTED
+  rgName: REDACTED
+  aiName: REDACTED
+  kvName: REDACTED
+  baseurl: REDACTED
+  environmentShort: REDACTED
+  environment: REDACTED

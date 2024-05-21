@@ -1,0 +1,71 @@
+parameters:
+- name: baseurl
+- name: kvServiceConnection
+- name: kvName
+
+steps:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download test script artifact
+    inputs:
+      artifact: PostmanTests
+      path: $(System.DefaultWorkingDirectory)
+
+  - task: SetVariable@0
+    inputs:
+      variableName: baseurl
+      value: ${{ parameters.baseurl }}
+
+  - task: AzureCLI@2
+    displayName: Get Subscription Key from Vault
+    inputs:
+      azureSubscription: ${{ parameters.kvServiceConnection }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        subkey=$(az keyvault secret show --name "subscription-key" --vault-name "${{parameters.kvName}}" --query value -o tsv)
+        echo "##vso[task.setvariable variable=subscriptionkey]$subkey"
+
+  - task: replacetokens@5
+    displayName: Replace tokens in collection
+    inputs:
+      targetFiles: AutomodApiTests.postman_collection.json
+      actionOnMissing: warn
+      actionOnNoFiles: warn
+
+  - task: Npm@1
+    displayName: Install newman postman test runner
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: install -g newman
+
+  - task: CmdLine@2
+    displayName: Run Postman Tests
+    continueOnError: true
+    inputs:
+      script: |
+        newman run AutomodApiTests.postman_collection.json --reporters cli,junit --reporter-junit-export $(Build.ArtifactStagingDirectory)/JunitResults.xml
+        sleep 30
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.8'
+      addToPath: true
+    displayName: 'Use Python 3.8'
+
+  - task: CmdLine@2
+    displayName: 'Set up and run acceptance tests'
+    inputs:
+      script: |
+        python -m pip install pytest requests
+        pytest src/acceptance_tests/acceptance_tests.py --junitxml=$(Build.ArtifactStagingDirectory)/test-results.xml
+    env:
+      BASE_URL: $(baseurl)
+      API_KEY: $(subscriptionkey)
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Acceptance Test Results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/test-results.xml'
+      searchFolder: $(Build.ArtifactStagingDirectory)

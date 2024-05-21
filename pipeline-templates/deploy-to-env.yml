@@ -1,0 +1,47 @@
+parameters:
+- name: rgServiceConnection
+- name: appName
+- name: rgName
+- name: aiName
+- name: kvServiceConnection
+- name: kvName
+- name: acr
+- name: imageRepository
+- name: tag
+- name: secretNames
+  type: object
+
+
+steps:
+  - bash: |
+      echo 'using image tag "${{parameters.tag}}"'
+      echo "##vso[task.setvariable variable=APPSETTINGS_STRING]$emptystr"
+
+  - ${{ each secretname in parameters.secretNames }}:
+    - task: AzureCLI@2
+      displayName: Retrieve and store key vault secret
+      inputs:
+        azureSubscription: ${{ parameters.kvServiceConnection }}
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          secret=$(az keyvault secret show --name "${{secretname}}" --vault-name "${{parameters.kvName}}" --query value -o tsv)
+          appsettingsstr="$(APPSETTINGS_STRING)-${{secretname}} '$secret' "
+          echo "##vso[task.setvariable variable=APPSETTINGS_STRING]$appsettingsstr"
+
+  - task: AzureAppServiceManage@0
+    displayName: Enable Continuous Monitoring
+    inputs:
+      azureSubscription: ${{ parameters.rgServiceConnection }}
+      Action: Enable Continuous Monitoring
+      WebAppName: ${{ parameters.appName }}
+      AppInsightsResourceGroupName: ${{ parameters.rgName }}
+      ApplicationInsightsResourceName: ${{ parameters.aiName }}
+
+  - task: AzureWebAppContainer@1
+    displayName: Deploy Container to Web App
+    inputs:
+      azureSubscription: ${{ parameters.rgServiceConnection }}
+      appName: ${{ parameters.appName }}
+      imageName: ${{ parameters.acr }}/${{ parameters.imageRepository }}:${{ parameters.tag }}
+      appSettings: $(APPSETTINGS_STRING)

@@ -1,0 +1,90 @@
+{
+  "one_name": {
+    "Comment": "Mustafa has been out of the project for a long time and still keeps appearing every now and then.",
+    "Title": "Mustafa is great",
+    "Organisation": "dummyorg"
+  },
+  "one_sentance": {
+    "Comment": "The Dentist Anthony who treated me (or was he a Pharmacist?) was the best in the Hospital (@StPaul), or even in Healthcare for that matter. #Healthcare",
+    "Title": "My angel god, @God bless the NHS",
+    "Organisation": "dummyorg"
+  },
+  "two_sentences": {
+    "Comment": "I loved that doctor Laila, she was amazing. I didn't like nurse Joy though.",
+    "Title": "Nurse Joy is a bitch",
+    "Organisation": "dummyorg"
+  },
+  "lower_case": {
+    "Comment": "oh dear, doctor beckham was aweful for me today!",
+    "Title": "doctor beckham sucks!",
+    "Organisation": "dummyorg"
+  },
+  "upper_case": {
+    "Comment": "That BITCH SARAH can fuck off",
+    "Title": "SARAH is a BITCH",
+    "Organisation": "dummyorg"
+  },
+  "multiple_names": {
+    "Comment": "Mustafa is a weird guy. that Mustafa is odd. Dan on the other hand is a bit more normal. What about Sandra?",
+    "Title": "Dan is my facourite",
+    "Organisation": "dummyorg"
+  },
+  "multiple_names_with_signoff": {
+    "Comment": "Simon is a weird guy. Steven on the other hand is a bit more normal. Regards, Sandra.",
+    "Title": "A bit weird",
+    "Organisation": "dummyorg"
+  },
+  "org_name": {
+    "Comment": "The service provided at James's is always second to none and the doctor called Alice did a fantastic job.",
+    "Title": "Great service",
+    "Organisation": "St James's Hospital"
+  },
+  "org_name_real1": {
+    "Comment": "Tried to book an appointment took 1 hour and 50 minutes to get an answer even though I was number 1 in the queue for 20 minutes, partner also tried at the same time from his phone was number 7 in the queue which went down 2 places to number 5 in 15 minutes while I was still number 1 !! Today came in for an appointment was seen late, I had another appointment straight after so because of being seen late, made me late for next appointment and they rang me to see where I was because I had booked in online! Prescription was issued and sent to pharmacy which I was told would be delivered to me because I couldn’t get back there (due to condition I went there for) nothing arrived so rang surgery, 15 minutes to get through at number 1, again! Only to be told ring the pharmacy, I did, pharmacy said it’s not ready that was from 10.50 am, till 6pm! And they don’t deliver, so am sitting here now wondering what to do and how I am going to get my prescription, thanks Audley Mills surgery and pharmacy",
+    "Title": "Poor service",
+    "Organisation": "Audley Mills Surgery"
+  },
+  "org_name_real2": {
+    "Comment": "Would like to thank lawrence Hill for being the best practice around very efficient there to listen and help.",
+    "Title": "Great service",
+    "Organisation": "Lawrence Hill Health Centre"
+  },
+  "signoff_with_name": {
+    "Comment": "This is great, the nurse called Sarah was very good. Thank you, from Matt",
+    "full_result": ["sarah", "matt"],
+    "Title": "Helpful staff"
+  },
+  "signoff_with_name_with_punc": {
+    "Comment": "This is a great practice, it's amazing. Thank you, all! Dan.",
+    "full_result": ["dan"],
+    "Title": "Great practice"
+  },
+  "name_no_signoff": {
+    "Comment": "This is a great hospital, the nurse called Sarah did a really good job",
+    "full_result": ["sarah"],
+    "Title": "Definitely recommend!"
+  },
+  "one_non_name": ["alan", "brian", "covid", "david"],
+  "all_non_names": ["lord", "ombudsman", "karma", "google"],
+  "no_non_names": ["alan", "brian", "david"],
+  "definite_name": {
+    "Comment": "I like the nurse called mustafa he was good",
+    "Title": "This hospital is great"
+  },
+  "definite_name_with_punc": {
+    "Comment": "I like the nurse called mustafa, he was good",
+    "Title": "This hospital is great"
+  },
+  "no_definite_name": {
+    "Comment": "The staff in the hospital treated me really well",
+    "Title": "Great staff"
+  },
+  "org_name_flagged": {
+    "org_name": "Ripley Hospital",
+    "full_result": ["matt", "alice", "ripley"]
+  },
+  "org_name_flagged_x2": {
+    "org_name": "Britton and Robson",
+    "full_result": ["robson", "matt", "britton", "alice"]
+  }
+}

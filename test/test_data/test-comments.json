@@ -1,0 +1,166 @@
+{
+  "ground": {
+    "Comment": "This was a really nice practice! I was promptly seen for care and the nurse made me feel at home when I had concerns.",
+    "Title": "Good Practice"
+  },
+  "acronym": {
+    "Comment": "This practice is a credit to the NHS I am proud to be bristish going here. Very happy with my service",
+    "Title": "Nice Practice"
+  },
+  "one_caps": {
+    "Comment": "The service I recieved here was VERY satisfactory and this is a great GP I would rate five stars",
+    "Title": "Good stuff"
+  },
+  "three_caps": {
+    "Comment": "SHAMBLES! These doctors wouldn't know how to treat a MILD cold or give a CT scan!",
+    "Title": "VERY disapponted"
+  },
+  "sexual harassment": {
+    "Comment": "the doctor sexually harassed me",
+    "Title": "Harassed"
+  },
+  "complaint A": {
+    "Comment": "I want to raise a complaint",
+    "Title": "Complaint"
+  },
+  "great practice": {
+    "Comment": "This prectice was great",
+    "Title": "great"
+  },
+  "terrible": {
+    "Comment": "wont be coming here again terrible",
+    "Title": "terrible"
+  },
+  "all_caps": {
+    "Comment": "WHAT A LOAD OF RUBBISH! THE DOCTOR WAS VERY RUDE TO ME AND SAID I HAD TO COME BACK ANOTHER TIME WITH AN APPOINTMENT",
+    "Title": "AVOID AT ALL COSTS"
+  },
+  "named_person": {
+    "Comment": "My favourite practitioner there was Dr Smith who gave me physio after my operation in A&E",
+    "Title": "Specific recommendation"
+  },
+  "named_nationality": {
+    "Comment": "I had a horrible experience at this hospital with a Brazilian pediatrician who didn't seem to care about my son",
+    "Title": "4/10 visit to the hospital"
+  },
+  "named_religion": {
+    "Comment": "I had a checkup at this hospital with a hindu nurse who didn't seem to care at all about my pain",
+    "Title": "Fuming"
+  },
+  "ner_exception_list_comment": {
+    "Comment": "The Dentist who treated me (or was he a Pharmacist?) was the best in the Hospital, or even in Healthcare for that matter.",
+    "Title": "My angel god bless the NHS"
+  },
+  "social_media": {
+    "Comment": "The Dentist @Anthony who treated me (or was he a Pharmacist?) was the best in the Hospital (@StPaul), or even in Healthcare for that matter. #Healthcare",
+    "Title": "My angel god, @God bless the NHS"
+  },
+  "one_name": {
+    "Comment": "Mustafa has been out of the project for a long time and still keeps appearing every now and then.",
+    "Title": "Mustafa is great"
+  },
+  "one_sentance": {
+    "Comment": "The Dentist Anthony who treated me (or was he a Pharmacist?) was the best in the Hospital (@StPaul), or even in Healthcare for that matter. #Healthcare",
+    "Title": "My angel god, @God bless the NHS"
+  },
+  "two_sentences": {
+    "Comment": "I loved that doctor Laila, she was amazing. I didn't like nurse Joy though.",
+    "Title": "Nurse Joy is a bitch"
+  },
+  "lower_case": {
+    "Comment": "oh dear, nurse beckham was aweful for me today!",
+    "Title": "nurse beckham sucks!"
+  },
+  "upper_case": {
+    "Comment": "That BITCH SANDRA can fuck off",
+    "Title": "SANDRA is a BITCH"
+  },
+  "multiple_names": {
+    "Comment": "Mustafa is a weird guy. that Mustafa is odd. Dan on the other hand is a bit more normal. What about Sandra?",
+    "Title": "Dan is my facourite"
+  },
+  "cutting": {
+    "Comment": "I threatened to cut myself and the doctor ignored me",
+    "Title": "doctor ignored my needs"
+  },
+  "depressed": {
+    "Comment": "I'm so depressed I want to end it all. Pyschiatrist was ok though",
+    "Title": "Too depressed to move"
+  },
+  "anxiety": {
+    "Comment": "I'm so anxious and low. I keep shaking and worrying about the future and what it means for me",
+    "Title": "Worried!"
+  },
+  "overdose": {
+    "Comment": "I took 120 tablets to end it and they tried to get me out of the hospital asap",
+    "Title": "bad healthcare"
+  },
+  "drug_abuse": {
+    "Comment": "i'm taking heroin and nearly OD'ed",
+    "Title": "Dan is my facourite"
+  },
+  "domestic_abuse": {
+    "Comment": "My hubby hit me and left me with a black eye from the torture. I was in a dark place and couldn't go on",
+    "Title": "Dactor Saviour"
+  },
+  "thanking_dr": {
+    "Comment": "Thank the doctor, I was in a dark place but he helped me",
+    "Title": "Dactor saved my life"
+  },
+  "crying": {
+    "Comment": "I'm crying from the help the doctor gave me",
+    "Title": "Great help"
+  },
+  "suing": {
+    "Comment": "Im suing them",
+    "Title": "Im suing them"
+  },
+  "tribunal": {
+    "Comment": "I am taking them to tribunal for negligence",
+    "Title": "The way I was treated was awful and I'm taking them to court. I am taking them to tribunal for negligence"
+  },
+  "nurse_hit": {
+    "Comment": "The nurse hit me",
+    "Title": "It was awful the way she treated me. The nurse hit me"
+  },
+  "refund": {
+    "Comment": "give me a refund",
+    "Title": " Give me my money back. I demand a refund"
+  },
+  "negligence": {
+    "Comment": "negligent to my care",
+    "Title": "they're wasting my time. Should go to hell for this. I'm contacting them for negligence"
+  },
+  "agency": {
+    "Comment": "contacting the agency",
+    "Title": "they're wasting my time. Should go to hell for this. I'm contacting the agency"
+  },
+  "ethnic": {
+    "Comment": "the welsh woman treated me wonderfully",
+    "Title": "the welsh women was lovely to me, bless her"
+  },
+  "hair_colour": {
+    "Comment": "The blonde doctor was smoking hot. she could treat me any day of the week",
+    "Title": "Blondie was smoking hot"
+  },
+  "height": {
+    "Comment": "the tall pharmacist treated me as if I was stupid",
+    "Title": "Treated so badly"
+  },
+  "wonderful": {
+    "Comment": "Treated brilliantly. The wonderful dentist was very nice",
+    "Title": "Wonderful service"
+  },
+  "awful": {
+    "Comment": "awful man",
+    "Title": "awful man"
+  },
+  "not_an_experience": {
+    "Comment": "I've been coming here for 20 years and the staff are always lovely, thank you",
+    "Title": "Always great"
+  },
+  "an_experience": {
+    "Comment": "I was seen quickly. The dentist said I was showing signs of gum disease, and that I needed my teeth and gums cleaning. They actually offered to do it on the spot as they'd had a cancellation. Thank you!",
+    "Title": "So efficient"
+  }
+}

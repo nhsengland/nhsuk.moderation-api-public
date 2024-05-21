@@ -1,0 +1,215 @@
+trigger:
+  branches:
+    include:
+    - master
+
+resources:
+- repo : self
+
+variables:
+- template: pipeline-vars/global.yml
+
+parameters:
+- name: environments
+  type: object
+  default:
+  - dev
+  - int
+  - stag
+  - prod
+- name: ObserveDependencies
+  displayName: Observe dependencies
+  type: string
+  default: true
+  values:
+  - true
+  - false
+- name: secretNames
+  type: object
+  default:
+  - ComplaintsURL
+  - ComplaintsKey
+  - NamesURL
+  - NamesKey
+  - SafeguardingURL
+  - SafeguardingKey
+  - DescriptionsURL
+  - DescriptionsKey
+  - NotAnExperienceURL
+  - NotAnExperienceKey
+  - UninformativeURL
+  - UninformativeKey
+
+stages:
+- stage: Test
+  displayName: Run unit tests
+  jobs:
+  - job: Test
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureKeyVault@2
+      displayName: Fetch secrets from Azure Key Vault. Just for the tests! Points at dev KV.
+      inputs:
+        azureSubscription: automod-vault-dev
+        KeyVaultName: nhsuk-automod-kv-dev-uks
+        SecretsFilter: '*'
+        RunAsPreJob: true
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: 3.8
+
+    - script:  python -m pip install --upgrade pip setuptools wheel
+      displayName: Install and update tools
+
+    - script: pip install -r requirements.txt
+      displayName: install requirements
+
+    - script: |
+        pip install pytest pytest-azurepipelines
+        pip install pytest-cov
+        python -m pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+      displayName: Run pytest
+      workingDirectory: $(Build.SourcesDirectory)
+      env:
+        ComplaintsURL: $(ComplaintsURL)
+        ComplaintsKey: $(ComplaintsKey)
+        NamesURL: $(NamesURL)
+        NamesKey: $(NamesKey)
+        SafeguardingURL: $(SafeguardingURL)
+        SafeguardingKey: $(SafeguardingKey)
+        DescriptionsURL: $(DescriptionsURL)
+        DescriptionsKey: $(DescriptionsKey)
+        NotAnExperienceURL: $(NotAnExperienceURL)
+        NotAnExperienceKey: $(NotAnExperienceKey)
+        UninformativeURL: $(UninformativeURL)
+        UninformativeKey: $(UninformativeKey)
+
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      displayName: Publish test results
+      inputs:
+        testResultsFiles: '**/test-*.xml'
+        testRunTitle: Publish test results for Python $(python.version)
+
+    - task: PublishCodeCoverageResults@1
+      displayName: Publish coverage results
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+
+- stage: Build
+  displayName: Build and push image
+  dependsOn: Test
+  condition: or(eq(${{parameters.ObserveDependencies}}, 'false'),succeeded())
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Login to NHSUK acr
+      inputs:
+        command: login
+        containerRegistry: $(acrServiceConnection)
+
+    - pwsh: |
+        Write-Host "Setting up the date time for build variable"
+        $date=$(Get-Date -format dd-MM-yyyy)
+        Write-Host "##vso[task.setvariable variable=currentTimeStamp]$date"
+      displayName: Set timestamp
+
+    - task: Docker@2
+      displayName: Build and push image to container registry
+      inputs:
+        repository: $(imageRepository)
+        command: buildAndPush
+        Dockerfile: $(dockerFilePath)
+        tags: |
+          latest
+          $(currentTimeStamp)-$(Build.BuildId)
+
+- stage: PublishTestArtifact
+  displayName: Publish acceptance test script
+  dependsOn: Build
+  jobs:
+  - job:
+    displayName: Publish acceptance test script
+    steps:
+    - task: PublishPipelineArtifact@1
+      displayName: Publish postman script
+      inputs:
+        artifactType: pipeline
+        targetPath: $(Build.SourcesDirectory)/src/data/AutomodApiTests.postman_collection.json
+        artifactName: PostmanTests
+
+- ${{ each env in parameters.environments }}:
+  - stage: Deploy_${{env}}
+    displayName: Deploy to ${{env}}
+    ${{ if eq('${{ env }}', 'dev') }}:
+      dependsOn:
+      - Build
+    ${{ if eq('${{ env }}', 'int') }}:
+      dependsOn:
+      - Deploy_dev
+    ${{ if eq('${{ env }}', 'stag') }}:
+      dependsOn:
+      - Deploy_int
+    ${{ if eq('${{ env }}', 'prod') }}:
+      dependsOn:
+      - Deploy_stag
+    condition: and(or(eq(${{parameters.ObserveDependencies}}, 'false'),succeeded()),ne(variables['Build.Reason'], 'PullRequest'))
+    variables:
+    - template: pipeline-vars/${{ env }}.yml
+    jobs:
+    - deployment: DeploymentJob
+      pool:
+        vmImage: ${{ variables.vmImageName }}
+      environment: ${{ variables.environment }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - template: pipeline-templates/deploy-to-env.yml
+              parameters:
+                rgServiceConnection: ${{ variables.rgServiceConnection }}
+                appName: ${{ variables.appName }}
+                rgName: ${{ variables.rgName }}
+                aiName: ${{ variables.aiName }}
+                kvServiceConnection: ${{ variables.kvServiceConnection }}
+                kvName: ${{ variables.kvName }}
+                acr: ${{ variables.acr }}
+                imageRepository: ${{ variables.imageRepository }}
+                tag: $(tag)
+                secretNames: ${{ parameters.secretNames }}
+
+  - stage: RunAcceptanceTests_${{env}}
+    displayName: Run Acceptance Tests (${{env}})
+    ${{ if eq('${{ env }}', 'dev') }}:
+      dependsOn:
+      - PublishTestArtifact
+    ${{ if eq('${{ env }}', 'int') }}:
+      dependsOn:
+      - Deploy_dev
+      - PublishTestArtifact
+    ${{ if eq('${{ env }}', 'stag') }}:
+      dependsOn:
+      - Deploy_int
+      - PublishTestArtifact
+    ${{ if eq('${{ env }}', 'prod') }}:
+      dependsOn:
+      - Deploy_stag
+      - PublishTestArtifact
+    condition: and(or(eq(${{parameters.ObserveDependencies}}, 'false'),succeeded()),ne(variables['Build.Reason'], 'PullRequest'))
+    variables:
+    - template: pipeline-vars/${{ env }}.yml
+    jobs:
+    - job:
+      steps:
+      - template: pipeline-templates/run-acceptance-tests.yml
+        parameters:
+          baseurl: ${{ variables.baseurl }}
+          kvServiceConnection: ${{ variables.kvServiceConnection }}
+          kvName: ${{ variables.kvName }}

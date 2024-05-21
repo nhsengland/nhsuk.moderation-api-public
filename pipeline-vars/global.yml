@@ -1,0 +1,6 @@
+variables:
+  acrServiceConnection: REDACTED
+  imageRepository: REDACTED
+  vmImageName: REDACTED
+  dockerfilePath: REDACTED
+  acr: REDACTED
