@@ -22,6 +22,8 @@ The app relies on making a series of api calls to function. The URLS and keys fo
 
 ## Data
 
+**NOTE: In this public version of this repo, the data folder has been redacted in its entirety.**
+
 The data folder contains seven csv files that are used as look-up tables for post-processing steps that take place in the flask app.
 
 - `acroynm-list.csv` To cross check against any all-caps words found
