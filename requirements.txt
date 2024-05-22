@@ -177,7 +177,7 @@ tqdm==4.64.0
     #   thinc
 typing-extensions==4.1.1
     # via black
-urllib3==1.26.7
+urllib3==1.26.18
     # via requests
 wasabi==0.9.1
     # via
