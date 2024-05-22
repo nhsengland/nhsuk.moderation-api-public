@@ -2,6 +2,8 @@
 
 This repo is to implement automatic moderation of reviews submitted to NHS.UK.
 
+Note that this is the public mirror of this repo, and as such some aspects have been redacted. This repo is being published for transparency and openness - it won't run out of the box, because of the redactions. 
+
 Detailed documentation about methodology and purpose [can be found at this link](https://nhsd-confluence.digital.nhs.uk/display/DAT/DS_233%3A+NHS.UK+Reviews+2), which can only be accessed by NHS England staff. This README deals instead with some practicalities of the repo itself. Details about the models themselves can be found in the `model_cards` folder in the root of this repo.
 
 ## Requirements
