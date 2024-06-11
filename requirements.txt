@@ -85,7 +85,7 @@ murmurhash==1.0.6
     #   thinc
 mypy-extensions==0.4.3
     # via black
-msal==1.18.0b1 # Changed
+msal==1.28.0 # Changed
 msal-extensions~=1.0.0 #Changed
 nltk==3.7
     # via textblob
