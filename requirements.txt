@@ -27,7 +27,7 @@ blis==0.4.1
     #   thinc
 catalogue==1.0.0
     # via spacy
-certifi==2021.10.8
+certifi==2024.7.4
     # via requests
 charset-normalizer==2.0.12
     # via requests
